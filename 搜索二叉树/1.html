@@ -1,0 +1,54 @@
+<html>
+<div id="box">
+    <p>
+        hello
+        <textarea name="jj" id="" cols="30" rows="10"></textarea>
+    </p>
+    <img src="" alt="">
+    <ul>
+        <li>a</li>
+        <li>b</li>
+    </ul>
+</div>
+<script>
+
+    // 写一个单独的方法来表达遍历到这个节点时的操作
+    function visitNode(node) {
+        // 简单写一下，不完善
+        if (node instanceof Text) {
+            // 文本节点
+            if (node.textContent) console.log(node.textContent);
+        }
+        if (node instanceof HTMLElement) {
+            // html标签
+            console.log(node.tagName);
+        }
+    }
+
+
+    function dfs2(root) {
+        // 用数组模拟栈
+        const stack = [];
+        // 根节点入栈
+        stack.push(root);
+        while (stack.length > 0) {
+            // 出栈
+            const currNode = stack.pop();
+            if (currNode === undefined) break;
+            visitNode(currNode);
+            // currNode 的子节点入栈
+            const childNodes = currNode.childNodes;
+            if (childNodes.length > 0) {
+                Array.from(childNodes).forEach((child) => stack.push(child));
+            }
+        }
+    }
+
+
+
+    const box = document.querySelector("#box");
+    dfs2(box)
+
+</script>
+
+</html>
